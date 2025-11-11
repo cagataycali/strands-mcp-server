@@ -8,6 +8,10 @@ Bidirectional MCP integration for Strands Agents.
 pip install strands-mcp-server
 ```
 
+<a href="https://glama.ai/mcp/servers/@cagataycali/strands-mcp-server">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@cagataycali/strands-mcp-server/badge" alt="Strands Server MCP server" />
+</a>
+
 ---
 
 ## Overview
