@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "strands-mcp-server"
-version = "0.1.1"
+version = "0.1.2"
 description = "Transform Strands Agents into MCP servers, exposing agent tools to any MCP-compatible client"
 readme = "README.md"
 requires-python = ">=3.10"
