@@ -175,31 +175,22 @@ agent.tool.mcp_client(
 
 ### invoke_agent Tool
 
-When `expose_agent=True`, clients get full agent access with model switching:
+When `expose_agent=True` (default), clients get full conversational access to the agent:
 
 ```python
-# Basic
-invoke_agent(prompt="Calculate 2 + 2")
-
-# Switch model provider
-invoke_agent(
-    prompt="Complex calculation",
-    model_provider="anthropic",
-    model_settings={"model_id": "claude-sonnet-4-20250514"}
-)
-
-# Custom system prompt
-invoke_agent(
-    prompt="Explain concept",
-    system_prompt="You are a teacher."
+# Basic usage via mcp_client
+agent.tool.mcp_client(
+    action="call_tool",
+    connection_id="remote",
+    tool_name="invoke_agent",
+    tool_args={"prompt": "Calculate 2 + 2 and explain your reasoning"}
 )
 ```
 
 **Parameters:**
-- `prompt` (required): Query for agent
-- `model_provider`: bedrock, anthropic, ollama, openai, github, env
-- `model_settings`: `{"model_id": "...", "params": {...}}`
-- `system_prompt`: Override agent's system prompt
+- `prompt` (required): Natural language query for the agent
+
+The agent will process the prompt using its configured model and tools, returning a complete response.
 
 ---
 

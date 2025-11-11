@@ -229,9 +229,9 @@ server {
 
 ---
 
-## Model Provider Switching
+## Full Agent Invocation
 
-Use different models per invocation:
+Use the `invoke_agent` tool for complex multi-tool queries:
 
 ```python
 from strands import Agent
@@ -247,57 +247,29 @@ agent.tool.mcp_client(
     server_url="http://localhost:8000/mcp"
 )
 
-# Use Anthropic model
+# Complex query requiring reasoning and multiple tools
 result = agent.tool.mcp_client(
     action="call_tool",
     connection_id="remote",
     tool_name="invoke_agent",
     tool_args={
-        "prompt": "Complex analysis task",
-        "model_provider": "anthropic",
-        "model_settings": {
-            "model_id": "claude-sonnet-4-20250514",
-            "params": {"temperature": 0.3}
-        }
+        "prompt": "Read data.csv, calculate the average of column B, and create a summary report"
     }
 )
 
-# Use local Ollama
+print(result)
+
+# Conversational query
 result = agent.tool.mcp_client(
     action="call_tool",
     connection_id="remote",
     tool_name="invoke_agent",
     tool_args={
-        "prompt": "Quick calculation",
-        "model_provider": "ollama",
-        "model_settings": {
-            "model_id": "qwen3:4b",
-            "host": "http://localhost:11434"
-        }
+        "prompt": "Explain the results of the last calculation in simple terms"
     }
 )
-```
 
----
-
-## Custom System Prompt
-
-Override agent's system prompt:
-
-```python
-result = agent.tool.mcp_client(
-    action="call_tool",
-    connection_id="remote",
-    tool_name="invoke_agent",
-    tool_args={
-        "prompt": "Explain quantum computing",
-        "system_prompt": (
-            "You are a physics professor. "
-            "Explain concepts clearly and simply. "
-            "Use analogies when helpful."
-        )
-    }
-)
+print(result)
 ```
 
 ---

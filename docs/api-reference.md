@@ -309,57 +309,7 @@ agent.tool.mcp_client(
     action="call_tool",
     connection_id="remote",
     tool_name="invoke_agent",
-    tool_args={"prompt": "Calculate 2 + 2"}
-)
-```
-
-### Model Provider Switching
-
-Switch to different model providers:
-
-```python
-# Anthropic
-agent.tool.mcp_client(
-    action="call_tool",
-    connection_id="remote",
-    tool_name="invoke_agent",
-    tool_args={
-        "prompt": "Complex analysis",
-        "model_provider": "anthropic",
-        "model_settings": {
-            "model_id": "claude-sonnet-4-20250514",
-            "params": {"temperature": 0.3}
-        }
-    }
-)
-
-# Ollama (local)
-agent.tool.mcp_client(
-    action="call_tool",
-    connection_id="remote",
-    tool_name="invoke_agent",
-    tool_args={
-        "prompt": "Quick calculation",
-        "model_provider": "ollama",
-        "model_settings": {
-            "model_id": "qwen3:4b",
-            "host": "http://localhost:11434"
-        }
-    }
-)
-```
-
-### System Prompt Override
-
-```python
-agent.tool.mcp_client(
-    action="call_tool",
-    connection_id="remote",
-    tool_name="invoke_agent",
-    tool_args={
-        "prompt": "Explain quantum computing",
-        "system_prompt": "You are a physics teacher. Explain concepts simply."
-    }
+    tool_args={"prompt": "Calculate 2 + 2 and explain your reasoning"}
 )
 ```
 
@@ -367,19 +317,32 @@ agent.tool.mcp_client(
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `prompt` | str | ✅ | Query for agent |
-| `model_provider` | str | ❌ | Model provider: bedrock, anthropic, ollama, openai, github, env |
-| `model_settings` | dict | ❌ | Model config: `{"model_id": "...", "params": {...}}` |
-| `system_prompt` | str | ❌ | Override agent's system prompt |
+| `prompt` | str | ✅ | Natural language query for the agent |
 
-### Supported Providers
+### How It Works
 
-- **bedrock** - Amazon Bedrock
-- **anthropic** - Anthropic API
-- **ollama** - Local Ollama
-- **openai** - OpenAI API
-- **github** - GitHub Models
-- **env** - Use environment variables
+The `invoke_agent` tool:
+1. Creates a fresh agent instance with clean message history
+2. Inherits parent agent's configuration (model, tools, system prompt)
+3. Processes the prompt using the agent's capabilities
+4. Returns the complete agent response
+
+### Use Cases
+
+**Complex multi-tool queries:**
+```python
+invoke_agent(prompt="Analyze data.csv, calculate averages, and create a summary report")
+```
+
+**Conversational responses:**
+```python
+invoke_agent(prompt="Explain the results of the last calculation in simple terms")
+```
+
+**Tool chaining:**
+```python
+invoke_agent(prompt="Read config.json, extract the database URL, and verify it's accessible")
+```
 
 ---
 
