@@ -32,24 +32,6 @@ Example:
     agent("call calculator tool on test-server with expression: 2 + 2")
     ```
 
-Architecture:
-    ```
-    ┌─────────────────────────────────────┐
-    │      Strands Agent (Client)         │
-    │  ┌──────────────────────────────┐   │
-    │  │     mcp_client tool          │   │
-    │  └──────────────────────────────┘   │
-    └─────────────────────────────────────┘
-                    ↓
-            MCP Client Connection
-                    ↓
-    ┌─────────────────────────────────────┐
-    │      Strands Agent (Server)         │
-    │  ┌──────────────────────────────┐   │
-    │  │     mcp_server tool          │   │
-    │  └──────────────────────────────┘   │
-    └─────────────────────────────────────┘
-    ```
 
 References:
 - MCP Specification: https://spec.modelcontextprotocol.io/

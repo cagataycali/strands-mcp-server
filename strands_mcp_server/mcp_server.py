@@ -42,30 +42,6 @@ Example:
     agent("mcp server status")
     ```
 
-Architecture:
-    ```
-    ┌─────────────────────────────────────┐
-    │      Strands Agent                  │
-    │  ┌──────────────────────────────┐   │
-    │  │ Tools: shell, calculator, etc│   │
-    │  └──────────────────────────────┘   │
-    │              ↓                       │
-    │  ┌──────────────────────────────┐   │
-    │  │     mcp_server tool          │   │
-    │  │  (exposes as MCP server)     │   │
-    │  └──────────────────────────────┘   │
-    └─────────────────────────────────────┘
-                    ↓
-     StreamableHTTP (stateless/stateful)
-                    ↓
-    ┌─────────────────────────────────────┐
-    │        MCP Clients                  │
-    │  • Claude Desktop                   │
-    │  • Other Strands Agents             │
-    │  • Custom MCP clients               │
-    └─────────────────────────────────────┘
-    ```
-
 References:
 - MCP Specification: https://spec.modelcontextprotocol.io/
 - Strands MCP Client: sdk-python/src/strands/tools/mcp/mcp_client.py

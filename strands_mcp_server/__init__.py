@@ -5,26 +5,6 @@ enabling both server and client capabilities. Transform your agents into MCP ser
 expose tools to Claude Desktop and other MCP clients, or connect your agents to remote MCP
 servers to use their tools.
 
-Architecture:
-    ```
-    ┌─────────────────────────────────────────────────────────────┐
-    │                    Strands Agent                            │
-    │  ┌──────────────────┐           ┌──────────────────┐       │
-    │  │   mcp_server     │           │   mcp_client     │       │
-    │  │  (expose tools)  │           │ (consume tools)  │       │
-    │  └──────────────────┘           └──────────────────┘       │
-    └─────────────────────────────────────────────────────────────┘
-              ↓                                  ↓
-       MCP Protocol                       MCP Protocol
-              ↓                                  ↓
-    ┌─────────────────┐              ┌─────────────────┐
-    │  MCP Clients    │              │  MCP Servers    │
-    │ • Claude Desktop│              │ • Other Agents  │
-    │ • Other Agents  │              │ • Remote APIs   │
-    │ • Custom Clients│              │ • MCP Services  │
-    └─────────────────┘              └─────────────────┘
-    ```
-
 Components:
 
 1. **mcp_server** - Turn agent into MCP server
@@ -219,5 +199,5 @@ References:
 from strands_mcp_server.mcp_client import mcp_client
 from strands_mcp_server.mcp_server import mcp_server
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __all__ = ["mcp_server", "mcp_client"]
