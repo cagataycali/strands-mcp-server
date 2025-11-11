@@ -1,0 +1,22 @@
+title: strands-mcp-server
+description: Bidirectional MCP integration for Strands Agents
+theme: jekyll-theme-cayman
+url: https://cagataycali.github.io
+baseurl: /strands-mcp-server
+
+author:
+  name: Cagatay Cali
+  email: cagataycali@icloud.com
+
+github:
+  repository_url: https://github.com/cagataycali/strands-mcp-server
+  issues_url: https://github.com/cagataycali/strands-mcp-server/issues
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
