@@ -49,6 +49,7 @@ References:
 - StreamableHTTPSessionManager: python-sdk/src/mcp/server/streamable_http_manager.py
 """
 
+import base64
 import contextlib
 import logging
 import threading
@@ -308,7 +309,7 @@ def _start_mcp_server(
 
         # Register call_tool handler
         @server.call_tool()
-        async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
+        async def call_tool(name: str, arguments: dict) -> list[types.ContentBlock]:
             """Handle tool calls from MCP clients.
 
             This handler:
@@ -394,13 +395,32 @@ def _start_mcp_server(
 
                 logger.debug(f"Tool '{name}' execution complete")
 
-                # Convert result to MCP TextContent format
+                # Convert result to MCP content format
                 mcp_content = []
                 if isinstance(result, dict) and "content" in result:
                     # Strands tool result format
                     for item in result.get("content", []):
-                        if isinstance(item, dict) and "text" in item:
+                        if not isinstance(item, dict):
+                            continue
+                        if "text" in item:
                             mcp_content.append(types.TextContent(type="text", text=item["text"]))
+                        elif "image" in item:
+                            # Strands/Bedrock image block → MCP ImageContent.
+                            # Shape: {"image": {"format": "png", "source": {"bytes": <bytes|base64 str>}}}
+                            img = item["image"] or {}
+                            fmt = img.get("format", "png")
+                            raw = (img.get("source") or {}).get("bytes", b"")
+                            data = raw if isinstance(raw, str) else base64.b64encode(raw).decode()
+                            mcp_content.append(
+                                types.ImageContent(type="image", data=data, mimeType=f"image/{fmt}")
+                            )
+                        elif "json" in item:
+                            # Structured payloads have no native MCP block → serialize as text.
+                            import json
+
+                            mcp_content.append(
+                                types.TextContent(type="text", text=json.dumps(item["json"]))
+                            )
                 else:
                     # Direct string or other result
                     mcp_content.append(types.TextContent(type="text", text=str(result)))
